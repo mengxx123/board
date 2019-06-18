@@ -219,20 +219,32 @@ class Board {
             y: 0
         }
 
-        this.canvasWidth = window.innerWidth - 48
+        let ratio = window.devicePixelRatio
+
+        this.canvasWidth = (window.innerWidth - 48)
         this.canvasHeight = window.innerHeight
 
         this.canvas = canvas
-        this.canvas.width = this.canvasWidth
-        this.canvas.height = this.canvasHeight
+        this.canvas.width = this.canvasWidth * ratio
+        this.canvas.height = this.canvasHeight * ratio
         this.canvas.style.width = this.canvasWidth + 'px'
         this.canvas.style.height = this.canvasHeight + 'px'
 
         this.ctx = this.canvas.getContext('2d')
-        this.ctx.width = this.canvasWidth
-        this.ctx.height = this.canvasHeight
+        this.ctx.width = this.canvasWidth * ratio
+        this.ctx.height = this.canvasHeight * ratio
 
-        this.elems = []
+        this.ctx.scale(ratio, ratio)
+
+        this.elems = [
+            {
+                type: 'rect',
+                x: 10,
+                y: 10,
+                width: 200,
+                height: 200
+            }
+        ]
         this.histories = []
 
         this.draw()
@@ -359,7 +371,7 @@ class Board {
 
         //     }
         // }
-        if (!'ontouchend' in document) {
+        if (!('ontouchend' in document)) {
             this.drawCursor(ctx, this.cursor)
         }
 
