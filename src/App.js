@@ -359,8 +359,9 @@ class Board {
 
         //     }
         // }
-
-        this.drawCursor(ctx, this.cursor)
+        if (!'ontouchend' in document) {
+            this.drawCursor(ctx, this.cursor)
+        }
 
         if (this.cursors && this.cursors.length) {
             this.drawCursor(ctx, this.cursors[0])
@@ -450,16 +451,13 @@ class App extends React.Component {
             _this.board.move(e)
         }
         function onTouchStart(e) {
-            console.log('onTouchStart', e)
-            _this.board.down(e)
+            _this.board.down(e.targetTouches[0])
         }
         function onTouchMove(e) {
-            // console.log(e.touchs)
-            // _this.board.down(e)
+            _this.board.move(e.targetTouches[0])
         }
         function onTouchEnd(e) {
-            // console.log(e.touchs)
-            // _this.board.down(e)
+            _this.board.up({})
         }
         function clear(e) {
             _this.board.clear()
