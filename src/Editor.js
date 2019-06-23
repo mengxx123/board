@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { BrowserRouter, Switch, Route, Link} from 'react-router-dom'
-
+import config from './config'
 import './App.css'
 import './Editor.scss'
 
@@ -251,13 +251,13 @@ class Board {
         this.ctx.scale(ratio, ratio)
 
         this.elems = [
-            {
-                type: 'rect',
-                x: 10,
-                y: 10,
-                width: 200,
-                height: 200
-            }
+            // {
+            //     type: 'rect',
+            //     x: 10,
+            //     y: 10,
+            //     width: 200,
+            //     height: 200
+            // }
         ]
         this.histories = []
 
@@ -485,10 +485,7 @@ class Editor extends React.Component {
         let { code } = this.props.match.params
         console.log('this.props', code)
 
-
-
-        let url = `ws://localhost:1026/board`
-        let socket = window.io.connect(url, {
+        let socket = window.io.connect(config.ws, {
             // path: '/board',
             transports: ['websocket', 'xhr-polling', 'jsonp-polling']
         })
@@ -562,6 +559,10 @@ class Editor extends React.Component {
             })
         }
 
+        function help() {
+            window.open('https://project.yunser.com/products/46a6ee9095c211e9ad7037051ae8dece', '_blank')
+        }
+
         // if (!_this.board) {
         //     return <div></div>
         // }
@@ -603,15 +604,15 @@ class Editor extends React.Component {
                         <button className="btn" type="button" onClick={undo}>撤销</button>
                         {/* <button className="btn" type="button" onClick={redo}>重做</button> */}
                         <button className="btn" type="button" onClick={clear}>清空</button>
+                        <button className="btn" type="button" onClick={help}>帮助</button>
                     </div>
                 </div>
-                <div className="user-list">
+                {/* <div className="user-list">
+                    {
+                        users.map(UserItem)
+                    }
+                </div> */}
 
-                </div>
-
-                {
-                    users.map(UserItem)
-                }
             </div>
         )
     }
